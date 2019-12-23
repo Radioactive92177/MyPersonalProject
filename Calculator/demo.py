@@ -79,7 +79,7 @@ Button(root, text="/", command=lambda: get_operation("/")).grid(row=5, column=3)
 # adding new operations
 Button(root, text="pi", command=lambda: get_operation("*3.14")).grid(row=2, column=4)
 Button(root, text="%", command=lambda: get_operation("%")).grid(row=3, column=4)
-Button(root, text="(", command=lambda: get_operation("(")).grid(row=4, column=4)
+Button(root, text=" ( ", command=lambda: get_operation("(")).grid(row=4, column=4)
 Button(root, text="exp", command=lambda: get_operation("**")).grid(row=5, column=4)
 
 Button(root, text="<-", command=lambda: undo()).grid(row=2, column=5)

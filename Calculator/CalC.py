@@ -134,19 +134,19 @@ Button(ButtonsFrame, text="+", fg="Snow", bg="gray40", font="bold", command=lamb
                                                                                                              pady=3)
 
 # adding functional buttons
-Button(ButtonsFrame, text="  AC  ", fg="Snow", bg="gray40", font="bold", command=lambda: clear_all()).grid(row=0,
-                                                                                                           columnspan=2,
-                                                                                                           padx=3,
-                                                                                                           pady=3)
+Button(ButtonsFrame, text="  AC  ", fg="Snow", bg="orangered", font="bold", command=lambda: clear_all()).grid(row=0,
+                                                                                                              columnspan=2,
+                                                                                                              padx=3,
+                                                                                                              pady=3)
 Button(ButtonsFrame, text="C", fg="Snow", bg="gray40", font="bold", command=lambda: undo()).grid(row=0, column=2,
                                                                                                  padx=3, pady=3)
 Button(ButtonsFrame, text=" . ", fg="Snow", bg="gray40", font="bold", command=lambda: get_variables(".")).grid(row=4,
                                                                                                                column=0,
                                                                                                                padx=3,
                                                                                                                pady=3)
-Button(ButtonsFrame, text="    =    ", fg="Snow", bg="gray40", font="bold", command=lambda: calculate()).grid(row=4,
-                                                                                                              column=2,
-                                                                                                              columnspan=2,
-                                                                                                              padx=3,
-                                                                                                              pady=3)
+Button(ButtonsFrame, text="    =    ", fg="Snow", bg="orangered", font="bold", command=lambda: calculate()).grid(row=4,
+                                                                                                                 column=2,
+                                                                                                                 columnspan=2,
+                                                                                                                 padx=3,
+                                                                                                                 pady=3)
 root.mainloop()

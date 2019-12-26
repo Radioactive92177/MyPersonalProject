@@ -138,7 +138,7 @@ Button(ButtonsFrame, text="  AC  ", fg="Snow", bg="orangered", font="bold", comm
                                                                                                               columnspan=2,
                                                                                                               padx=3,
                                                                                                               pady=3)
-Button(ButtonsFrame, text="C", fg="Snow", bg="gray40", font="bold", command=lambda: undo()).grid(row=0, column=2,
+Button(ButtonsFrame, text="D", fg="Snow", bg="gray40", font="bold", command=lambda: undo()).grid(row=0, column=2,
                                                                                                  padx=3, pady=3)
 Button(ButtonsFrame, text=" . ", fg="Snow", bg="gray40", font="bold", command=lambda: get_variables(".")).grid(row=4,
                                                                                                                column=0,

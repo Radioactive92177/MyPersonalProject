@@ -42,6 +42,7 @@ def display_all():
 
 
 root = Tk()
+root.title("Database App")
 canvas = Canvas(root, height=480, width=900)
 canvas.pack()
 
@@ -70,7 +71,7 @@ entry_address.grid(row=3, column=1)
 add_button = Button(frame, text="Add", command=lambda: get_data(entry_name.get(), entry_age.get(), entry_address.get()))
 add_button.grid(row=4, column=1)
 
-search = Label(frame, text="Search")
+search = Label(frame, text="Search Data")
 search.grid(row=5, column=1)
 
 search = Label(frame, text="Search by Name")

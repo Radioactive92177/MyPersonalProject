@@ -23,4 +23,18 @@ def insert_data():
     conn.commit()
     conn.close()
 
-insert_data()
+
+def search_age():
+    conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
+    cur = conn.cursor()
+    age = input("Enter Age: ")
+    age = str(age)
+    query = '''SELECT *from demo_table where age =%s'''%age
+    cur.execute(query, (age))
+    row = cur.fetchone()
+    print(row)
+    conn.commit()
+    conn.close()
+
+#insert_data()
+search_age()

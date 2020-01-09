@@ -1,6 +1,4 @@
 from tkinter import *
-import tkinter as tk
-
 import psycopg2
 
 
@@ -18,7 +16,7 @@ def search_name(name):
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
     cur = conn.cursor()
     query = '''SELECT *FROM demo_table where name='%s';''' % name
-    cur.execute(query, (name))
+    cur.execute(query, name)
     row = cur.fetchone()
     display_search(row)
     conn.commit()

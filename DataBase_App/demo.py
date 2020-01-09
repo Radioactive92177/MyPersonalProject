@@ -13,10 +13,14 @@ def create():
 def insert_data():
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
     cur = conn.cursor()
-    cur.execute('''INSERT INTO demo_table(name, age, address) VALUES ('John',25,'NY');''')
+    name = input("Enter Name: ")
+    age = input("Enter Age: ")
+    address = input("Enter Address: ")
+
+    query = '''INSERT INTO demo_table(name, age, address) VALUES (%s,%s,%s);'''
+    cur.execute(query, (name, age, address))
     print("Data Inserted")
     conn.commit()
     conn.close()
-
 
 insert_data()

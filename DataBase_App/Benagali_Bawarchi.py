@@ -10,24 +10,36 @@ def get_data(First_Name, Last_Name, order, quantity):
     print("Data Inserted")
     conn.commit()
     conn.close()
-
+    display_all()
 
 def search_data(First_Name):
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
     cur = conn.cursor()
     query = '''SELECT *FROM bengali_bawarchi where "First Name"='%s';''' % First_Name
     cur.execute(query, First_Name)
-    row = cur.fetchone()
-    display_search(row)
+    row = cur.fetchall()
+    for x in row:
+        display_search(row)
     conn.commit()
     conn.close()
+
 
 def display_search(row):
     listbox = Listbox(search_frame, width=42)
     listbox.grid(row=2, column=1)
     listbox.insert(END, row)
-    return row
 
+
+def display_all():
+    conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
+    cur = conn.cursor()
+    query = '''SELECT *FROM bengali_bawarchi'''
+    cur.execute(query)
+    row = cur.fetchall()
+    listbox = Listbox(list_frame, width=42, height=3)
+    listbox.grid(row=0, column=1)
+    for x in row:
+        listbox.insert(END, x)
 
 
 def members():
@@ -77,9 +89,17 @@ def members():
 
     search_button = Button(search_frame, text="               SEARCH                 ", fg="firebrick2", bg="light "
                                                                                                             "yellow",
-                           font=("Times", 15, "bold"),command=lambda :search_data(search_entry.get()))
+                           font=("Times", 15, "bold"), command=lambda: search_data(search_entry.get()))
     search_button.grid(row=1, column=1)
 
+    global list_frame
+    list_frame = Frame(canvas, bg="brown1")
+    list_frame.place(relx=0.1, rely=0.63, relwidth=0.8, relheight=0.2)
+
+    order_list = Label(list_frame, text="   ORDERS : ", fg="light yellow", bg="brown1", font=("Times", 18, "bold"))
+    order_list.grid(row=0,column=0)
+
+    display_all()
     member_window.mainloop()
 
 

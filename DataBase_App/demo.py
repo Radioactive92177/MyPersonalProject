@@ -1,4 +1,4 @@
-import psycopg2
+"""import psycopg2
 
 
 def create():
@@ -37,4 +37,12 @@ def search_age():
     conn.close()
 
 #insert_data()
-search_age()
+search_age()"""
+
+from tkinter import *
+
+root = Tk()
+Entry(root).grid(row=0,column=0)
+Entry(root).grid(row=0,column=1)
+Entry(root).grid(row=0,column=2)
+root.mainloop()

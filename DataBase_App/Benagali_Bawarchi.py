@@ -5,28 +5,22 @@ import psycopg2
 def get_data(First_Name, Last_Name, order, quantity):
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
     cur = conn.cursor()
-    query = '''INSERT INTO benagali_bawarchi("First Name", "Last Name", "Order", quantity) VALUES (%s,%s,%s,%s);'''
+    query = '''INSERT INTO bengali_bawarchi("First Name", "Last Name", "Order", quantity) VALUES (%s,%s,%s,%s);'''
     cur.execute(query, (First_Name, Last_Name, order, quantity))
     print("Data Inserted")
     conn.commit()
     conn.close()
 
 
-def search_data(First_Name):
+"""def search_data(First_Name):
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
     cur = conn.cursor()
     query = '''SELECT *FROM bengali_bawarchi where First Name='%s';''' % First_Name
     cur.execute(query, First_Name)
     row = cur.fetchone()
-    display_search(row)
     conn.commit()
-    conn.close()
+    conn.close()"""
 
-
-def display_search(row):
-    listbox = Listbox(frame, width=20, height=1)
-    listbox.grid(row=9, column=1)
-    listbox.insert(END, row)
 
 
 def members():
@@ -79,8 +73,19 @@ def members():
                            font=("Times", 15, "bold"))
     search_button.grid(row=1, column=1)
 
+    First_Name = search_entry.get()
+
+    conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
+    cur = conn.cursor()
+    query = '''SELECT *FROM bengali_bawarchi where First Name='%s';''' % First_Name
+    cur.execute(query, First_Name)
+    row = cur.fetchone()
+    conn.commit()
+    conn.close()
+
     listbox = Listbox(search_frame, width=42)
     listbox.grid(row=2, column=1)
+    listbox.insert(END,row)
 
     member_window.mainloop()
 

@@ -12,14 +12,21 @@ def get_data(First_Name, Last_Name, order, quantity):
     conn.close()
 
 
-"""def search_data(First_Name):
+def search_data(First_Name):
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
     cur = conn.cursor()
-    query = '''SELECT *FROM bengali_bawarchi where First Name='%s';''' % First_Name
+    query = '''SELECT *FROM bengali_bawarchi where "First Name"='%s';''' % First_Name
     cur.execute(query, First_Name)
     row = cur.fetchone()
+    display_search(row)
     conn.commit()
-    conn.close()"""
+    conn.close()
+
+def display_search(row):
+    listbox = Listbox(search_frame, width=42)
+    listbox.grid(row=2, column=1)
+    listbox.insert(END, row)
+    return row
 
 
 
@@ -70,22 +77,8 @@ def members():
 
     search_button = Button(search_frame, text="               SEARCH                 ", fg="firebrick2", bg="light "
                                                                                                             "yellow",
-                           font=("Times", 15, "bold"))
+                           font=("Times", 15, "bold"),command=lambda :search_data(search_entry.get()))
     search_button.grid(row=1, column=1)
-
-    First_Name = search_entry.get()
-
-    conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
-    cur = conn.cursor()
-    query = '''SELECT *FROM bengali_bawarchi where First Name='%s';''' % First_Name
-    cur.execute(query, First_Name)
-    row = cur.fetchone()
-    conn.commit()
-    conn.close()
-
-    listbox = Listbox(search_frame, width=42)
-    listbox.grid(row=2, column=1)
-    listbox.insert(END,row)
 
     member_window.mainloop()
 

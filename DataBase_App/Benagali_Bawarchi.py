@@ -8,11 +8,12 @@ def login(registration_id, password):
     query = '''select EXISTS (SELECT "reg","pass" FROM MEMBERS WHERE "reg"= {0} and "pass" = '{1}');'''.format(
         registration_id, password)
     cur.execute(query, (registration_id, password))
-    row = cur.fetchone()
-    if row == "(True,)":
-        print("LOGIN SUCCESSFUL")
+    result = cur.fetchone()
+    if result == (True,):
+        print("Login Successful")
+        members()
     else:
-        print("User not found")
+        print("Access Denied")
     conn.commit()
     conn.close()
 

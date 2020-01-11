@@ -2,6 +2,21 @@ from tkinter import *
 import psycopg2
 
 
+def login(registration_id, password):
+    conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
+    cur = conn.cursor()
+    query = '''select EXISTS (SELECT "reg","pass" FROM MEMBERS WHERE "reg"= {0} and "pass" = '{1}');'''.format(
+        registration_id, password)
+    cur.execute(query, (registration_id, password))
+    row = cur.fetchone()
+    if row == "(True,)":
+        print("LOGIN SUCCESSFUL")
+    else:
+        print("User not found")
+    conn.commit()
+    conn.close()
+
+
 def get_data(First_Name, Last_Name, order, quantity):
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
     cur = conn.cursor()
@@ -11,6 +26,7 @@ def get_data(First_Name, Last_Name, order, quantity):
     conn.commit()
     conn.close()
     display_all()
+
 
 def search_data(First_Name):
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
@@ -97,7 +113,7 @@ def members():
     list_frame.place(relx=0.1, rely=0.63, relwidth=0.8, relheight=0.2)
 
     order_list = Label(list_frame, text="   ORDERS : ", fg="light yellow", bg="brown1", font=("Times", 18, "bold"))
-    order_list.grid(row=0,column=0)
+    order_list.grid(row=0, column=0)
 
     display_all()
     member_window.mainloop()
@@ -113,10 +129,28 @@ frame.place(relx=0.1, rely=0.1, relwidth=0.8, relheight=0.8)
 
 Label(frame, text="Bengali Bawarchi", fg="light yellow", bg="black", font=("Times", 30, "bold")).pack(fill=X)
 Label(frame, text="Welcome to Bengali Bawarchi"
-                  " \nPlease stay quiet"
-                  "\nThe only place in LPU"
-                  "\nWhere food feels like home", fg="light yellow", bg="brown1", font=("Times", 15, "bold")).pack()
-Button(frame, text="MEMBERS", command=members).pack()
-Button(frame, text="CUSTOMERS").pack(side=BOTTOM)
+                  "\nPlease Enter your details as"
+                  "\Mentioned below", fg="light yellow", bg="brown1", font=("Times", 15, "bold")).pack()
+
+frame2 = Frame(canvas, bg="brown1")
+frame2.place(relx=0.1, rely=0.4, relwidth=0.8, relheight=0.4)
+
+registration_id = Label(frame2, text=" REGISTRATION ID : ", fg="light yellow", bg="brown1", font=("Times", 18, "bold"))
+password = Label(frame2, text="        PASSWORD       : ", fg="light yellow", bg="brown1", font=("Times", 18, "bold"))
+
+registration_id.grid(row=0, column=0)
+password.grid(row=1, column=0)
+
+registration_id_entry = Entry(frame2, width=38)
+password_entry = Entry(frame2, width=38)
+
+registration_id_entry.grid(row=0, column=1)
+password_entry.grid(row=1, column=1)
+
+login_button = Button(frame2, text="               LOGIN               ", activeforeground="white",
+                      activebackground="black",
+                      fg="firebrick2", bg="light yellow", font=("Times", 15, "bold"), relief="raised",
+                      command=lambda: login(registration_id_entry.get(), password_entry.get()))
+login_button.grid(row=2, column=1)
 
 root.mainloop()

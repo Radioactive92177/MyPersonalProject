@@ -2,18 +2,37 @@ from tkinter import *
 import psycopg2
 
 
-def login(registration_id, password):
+def login_member(registration_id, password):
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
     cur = conn.cursor()
     query = '''select EXISTS (SELECT "reg","pass" FROM MEMBERS WHERE "reg"= {0} and "pass" = '{1}');'''.format(
         registration_id, password)
-    cur.execute(query, (registration_id, password))
+    cur.execute(query)
     result = cur.fetchone()
     if result == (True,):
         print("Login Successful")
         members()
     else:
         print("Access Denied")
+    message(result)
+    conn.commit()
+    conn.close()
+
+
+def message(result):
+    if result == (True,):
+        mes = "Login Successful"
+    else:
+        mes = "Access Denied !"
+    return mes
+
+
+def register_member(reg, name, password, ph_no, address):
+    conn = psycopg2.connect(dbname="postgres", user="postgres", password="6502", host="localhost")
+    cur = conn.cursor()
+    query = '''INSERT INTO members (reg, name, pass, "PHONE No", address) VALUES(%s,%s,%s,%s,%s);'''
+    cur.execute(query, (reg, name, password, ph_no, address))
+    print(f"Data of {name} is inserted")
     conn.commit()
     conn.close()
 
@@ -134,7 +153,7 @@ Label(frame, text="Welcome to Bengali Bawarchi"
                   "\Mentioned below", fg="light yellow", bg="brown1", font=("Times", 15, "bold")).pack()
 
 frame2 = Frame(canvas, bg="brown1")
-frame2.place(relx=0.1, rely=0.4, relwidth=0.8, relheight=0.4)
+frame2.place(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.18)
 
 registration_id = Label(frame2, text=" REGISTRATION ID : ", fg="light yellow", bg="brown1", font=("Times", 18, "bold"))
 password = Label(frame2, text="        PASSWORD       : ", fg="light yellow", bg="brown1", font=("Times", 18, "bold"))
@@ -151,7 +170,8 @@ password_entry.grid(row=1, column=1)
 login_button = Button(frame2, text="               LOGIN               ", activeforeground="white",
                       activebackground="black",
                       fg="firebrick2", bg="light yellow", font=("Times", 15, "bold"), relief="raised",
-                      command=lambda: login(registration_id_entry.get(), password_entry.get()))
+                      command=lambda: login_member(registration_id_entry.get(), password_entry.get()))
 login_button.grid(row=2, column=1)
+
 
 root.mainloop()

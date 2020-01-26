@@ -1,9 +1,4 @@
-# program taken from http://stackoverflow.com/questions/4969543/colour-chart-for-tkinter-and-tix-using-python
-#
 from tkinter import *
-
-MAX_ROWS = 36
-FONT_SIZE = 10  # (pixels)
 
 COLORS = ['snow', 'ghost white', 'white smoke', 'gainsboro', 'floral white', 'old lace',
           'linen', 'antique white', 'papaya whip', 'blanched almond', 'bisque', 'peach puff',
@@ -82,17 +77,33 @@ COLORS = ['snow', 'ghost white', 'white smoke', 'gainsboro', 'floral white', 'ol
           'gray84', 'gray85', 'gray86', 'gray87', 'gray88', 'gray89', 'gray90', 'gray91', 'gray92',
           'gray93', 'gray94', 'gray95', 'gray97', 'gray98', 'gray99']
 
+COlORS_dic = dict()
+# converting list to string
+for x in range(1, len(COLORS)):
+    COlORS_dic[x] = COLORS[x]
+
+
+def col(n):
+    try:
+        col_name = str(COlORS_dic[var.get()])
+        col_frame = Frame(root, bg=col_name)
+        col_frame.place(relx=0.05, rely=0.45, relwidth=0.9, relheight=0.5)
+        Label(col_frame, text=col_name.capitalize(), fg="black", font=("Helvetica", 10, "bold"), bg=col_name).pack(
+            expand=True)
+    except KeyError:
+        print(f"No color at {int(var.get())}")
+
 root = Tk()
-root.title("Named colour chart")
-row = 0
-col = 0
-for color in COLORS:
-    e = Label(root, text=color, background=color,
-              font=(None, -FONT_SIZE))
-    e.grid(row=row, column=col, sticky=E + W)
-    row += 1
-    if row > 36:
-        row = 0
-        col += 1
+root.title("Color Scroll")
+root.geometry(f"{len(COLORS)}x{len(COLORS)}")
+
+entry_frame = Frame(root)
+entry_frame.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.3)
+
+var = DoubleVar()
+color_scale = Scale(root, variable=var, orient=HORIZONTAL, from_=0, to=len(COlORS_dic), relief="groove",
+                    length=len(COLORS),
+                    cursor="DOT", command=col)
+color_scale.pack(anchor=CENTER)
 
 root.mainloop()

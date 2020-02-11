@@ -4,6 +4,7 @@ from tkinter import *
 root = Tk()
 root.title("CalC version 01")
 root.configure(bg="LightBlue2")
+root.resizable(0,0)
 
 # adding title frame
 TitleFrame = Frame(root, bg="gray29")

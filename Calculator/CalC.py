@@ -1,5 +1,6 @@
 import parser
 from tkinter import *
+from tkinter import messagebox
 
 root = Tk()
 root.title("CalC version 01")
@@ -67,7 +68,7 @@ def calculate():
         Display.insert(0, result)
     except Exception:
         clear_all()
-        Display.insert(0, "Error")
+        messagebox.showerror("error","error!-check values")
 
 
 # adding buttons frame
